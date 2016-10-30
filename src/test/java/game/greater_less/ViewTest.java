@@ -1,6 +1,6 @@
 package game.greater_less;
 
-import game.greater_less.model.ModelStateDTO;
+import game.greater_less.model.ModelStateSnapshotDTO;
 import game.greater_less.model.RoundResult;
 import org.junit.Assert;
 import org.junit.Test;
@@ -19,7 +19,7 @@ public class ViewTest {
     @Test
     public void testGetStringFromInputCheckResult() {
         View view = new View();
-        ModelStateDTO modelState = getValidModelState();
+        ModelStateSnapshotDTO modelState = getValidModelState();
         Exception exception = null;
         RoundResult roundResultGlobal = null;
         try {

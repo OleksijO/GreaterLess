@@ -1,12 +1,12 @@
 package game.greater_less;
 
 import game.greater_less.exception.ViewException;
+import game.greater_less.model.ModelStateSnapshotDTO;
 import game.greater_less.model.RoundResult;
-import game.greater_less.model.ModelStateDTO;
 
 import java.util.List;
 
-import static game.greater_less.model.ModelStateDTO.UNEXPECTED_EMPTY_MODEL_STATE;
+import static game.greater_less.model.ModelStateSnapshotDTO.UNEXPECTED_EMPTY_MODEL_STATE;
 
 /**
  * This class represents View unit of MVC based architecture of program the game "Greater/Less".
@@ -69,17 +69,17 @@ public class View {
      *
      * @param roundInfo model state snapshot
      */
-    public void showRoundInfo(ModelStateDTO roundInfo) {
+    public void showRoundInfo(ModelStateSnapshotDTO roundInfo) {
         checkForValid(roundInfo);
         printEmptyRow();
         printEmptyRow();
         printMessage(PICKED_NUMBER_IS_IN_RANGE_FROM + roundInfo.getCurrentLowerBound()
                 + TO + roundInfo.getCurrentUpperBound());
-        printMessage(YOUR_TRIES + convertListToString(roundInfo.getUserTries()));
+        printMessage(YOUR_TRIES + convertListToString(roundInfo.getUserInputHistory()));
         printMessage(YOUR_LATEST_RESULT + getStringFromInputCheckResult(roundInfo.getRoundResult()));
     }
 
-    private void checkForValid(ModelStateDTO state) {
+    private void checkForValid(ModelStateSnapshotDTO state) {
         if ((state == null) || (!state.isValid())) {
             throw new ViewException(UNEXPECTED_EMPTY_MODEL_STATE + (state == null ? null : state.toString()));
         }
@@ -125,7 +125,7 @@ public class View {
      *
      * @param modelState model state snapshot
      */
-    public void showStatistics(ModelStateDTO modelState) {
+    public void showStatistics(ModelStateSnapshotDTO modelState) {
         checkForValid(modelState);
         int userIllegalTryCount = modelState.getUserIllegalInputCount();
         int userCorrectTryCount = modelState.getUserCorrectInputCount();

@@ -10,14 +10,16 @@ import static game.greater_less.model.Model.UPPER_BOUND;
  *
  * @author oleksij.onysymchuk@gmail
  */
-public class ModelStateDTO {
-    /** The value is the error message when the model state is invalid and is used mainly as exception message */
+public class ModelStateSnapshotDTO {
+    /**
+     * The value is the error message when the model state is invalid and is used mainly as exception message
+     */
     public static final String UNEXPECTED_EMPTY_MODEL_STATE = "Unexpected empty/null/nonValid modelState: ";
 
     /* The values below represents corresponding values of model unit */
     private int currentLowerBound;
     private int currentUpperBound;
-    private List<String> userTries;
+    private List<String> userInputHistory;
     private RoundResult roundResult;
     private int userIllegalInputCount;
     private int userCorrectInputCount;
@@ -29,9 +31,9 @@ public class ModelStateDTO {
         if ((currentLowerBound < Model.LOWER_BOUND) ||
                 (currentUpperBound > UPPER_BOUND) ||
                 (currentLowerBound > currentUpperBound) ||
-                (userTries == null) ||
+                (userInputHistory == null) ||
                 (roundResult == null) ||
-                (userCorrectInputCount > userTries.size())) {
+                (userCorrectInputCount > userInputHistory.size())) {
             return false;
         }
 
@@ -43,15 +45,18 @@ public class ModelStateDTO {
      */
     @Override
     public String toString() {
-        return "ModelStateDTO{" +
+        return "ModelStateSnapshotDTO{" +
                 "currentLowerBound=" + currentLowerBound +
                 ", currentUpperBound=" + currentUpperBound +
-                ", userTries=" + userTries +
-                ", roundResult=" + roundResult +
+                ", userInputHistory=" + userInputHistory +
+                " [last='" + userInputHistory.get(userInputHistory.size() - 1) +
+                "',size=" + userInputHistory.size() + "]"+
+                ", roundResult=" + roundResult.toString() +
                 ", userIllegalInputCount=" + userIllegalInputCount +
                 ", userCorrectInputCount=" + userCorrectInputCount +
                 '}';
     }
+
 
     /**
      * @return returns property of current (in-game) lower bound of range
@@ -70,8 +75,8 @@ public class ModelStateDTO {
     /**
      * @return returns history of user's input values
      */
-    public List<String> getUserTries() {
-        return userTries;
+    public List<String> getUserInputHistory() {
+        return userInputHistory;
     }
 
     /**
@@ -83,8 +88,8 @@ public class ModelStateDTO {
 
     /**
      * @return returns counter's value of user's illegal input values non integer or out of bounds (depends
-     *          on {@code Model.includeIllegalNonIntegerInputsToHistory} property).
-     *          The counter is used for after game statistics
+     * on {@code Model.includeIllegalNonIntegerInputsToHistory} property).
+     * The counter is used for after game statistics
      */
     public int getUserIllegalInputCount() {
         return userIllegalInputCount;
@@ -92,7 +97,7 @@ public class ModelStateDTO {
 
     /**
      * @return returns counter's value of user's correct (integer) input values.
-     *          The counter is used for after game statistics
+     * The counter is used for after game statistics
      */
     public int getUserCorrectInputCount() {
         return userCorrectInputCount;
@@ -106,8 +111,8 @@ public class ModelStateDTO {
         this.currentUpperBound = currentUpperBound;
     }
 
-    public void setUserTries(List<String> userTries) {
-        this.userTries = userTries;
+    public void setUserInputHistory(List<String> userInputHistory) {
+        this.userInputHistory = userInputHistory;
     }
 
     public void setRoundResult(RoundResult roundResult) {

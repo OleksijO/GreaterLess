@@ -31,7 +31,7 @@ public class Model {
     /* The value of current (in-game) lower bound (included) of initial game range */
     private int currentUpperBound;
     /* Container for storing user try guess inputs, i.e. user inputs history */
-    private List<String> userInputs;
+    private List<String> userInputHistory;
     /* The result of last round of game on user try input */
     private RoundResult roundResult;
 
@@ -56,7 +56,7 @@ public class Model {
         pickedNumber = (int) (LOWER_BOUND + Math.random() * (UPPER_BOUND - LOWER_BOUND + 1));
         currentLowerBound = LOWER_BOUND;
         currentUpperBound = UPPER_BOUND;
-        userInputs = new ArrayList<>();
+        userInputHistory = new ArrayList<>();
         userIllegalInputCount = 0;
     }
 
@@ -71,25 +71,28 @@ public class Model {
         if (!checkStringIsInteger(userInput)) {
             if (includeIllegalNonIntegerInputsToHistory) {
                 userIllegalInputCount++;
-                userInputs.add(userInput);
+                userInputHistory.add(userInput);
             }
             roundResult = ILLEGAL_INPUT;
             return;
         }
 
         int userInputNumber = Integer.parseInt(userInput);
-        userInputs.add(userInput);
-        userCorrectInputCount++;
+        userInputHistory.add(userInput);
+
         if ((userInputNumber > currentUpperBound) || (userInputNumber < currentLowerBound)) {
             userIllegalInputCount++;
             roundResult = OUT_OF_BOUNDS;
         } else if (userInputNumber > pickedNumber) {
+            userCorrectInputCount++;
             currentUpperBound = userInputNumber - 1;            // "-1" to exclude input number from range
             roundResult = GREATER_THAN_PICKED_NUMBER;
         } else if (userInputNumber < pickedNumber) {
+            userCorrectInputCount++;
             currentLowerBound = userInputNumber + 1;            // "+1" to exclude input number from range
             roundResult = LESS_THAN_PICKED_NUMBER;
         } else {
+            userCorrectInputCount++;
             roundResult = EQUALS_TO_PICKED_NUMBER;
         }
     }
@@ -108,12 +111,12 @@ public class Model {
      *
      * @return the state of game model unit.
      */
-    public ModelStateDTO getModelState() {
-        ModelStateDTO modelState = new ModelStateDTO();
+    public ModelStateSnapshotDTO getModelState() {
+        ModelStateSnapshotDTO modelState = new ModelStateSnapshotDTO();
         modelState.setCurrentLowerBound(currentLowerBound);
         modelState.setCurrentUpperBound(currentUpperBound);
         modelState.setRoundResult(roundResult);
-        modelState.setUserTries(Collections.unmodifiableList(userInputs));
+        modelState.setUserInputHistory(Collections.unmodifiableList(userInputHistory));
         modelState.setUserIllegalInputCount(userIllegalInputCount);
         modelState.setUserCorrectInputCount(userCorrectInputCount);
         return modelState;

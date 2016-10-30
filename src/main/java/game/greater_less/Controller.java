@@ -2,12 +2,12 @@ package game.greater_less;
 
 import game.greater_less.exception.ControllerException;
 import game.greater_less.model.Model;
-import game.greater_less.model.ModelStateDTO;
+import game.greater_less.model.ModelStateSnapshotDTO;
 import game.greater_less.model.RoundResult;
 
 import java.util.Scanner;
 
-import static game.greater_less.model.ModelStateDTO.UNEXPECTED_EMPTY_MODEL_STATE;
+import static game.greater_less.model.ModelStateSnapshotDTO.UNEXPECTED_EMPTY_MODEL_STATE;
 
 /**
  * This class represents Controller unit of MVC based architecture of program the game "Greater/Less".
@@ -46,7 +46,7 @@ public class Controller {
             view.showPromt();
             while (!(userInput = inputStringValueWithScanner(scanner)).toLowerCase().equals(EXIT)) {
                 model.performRoundWithUserInput(userInput);
-                ModelStateDTO modelState = model.getModelState();
+                ModelStateSnapshotDTO modelState = model.getModelState();
                 if ((modelState == null) || (!modelState.isValid())) {
                     String errorMessage = UNEXPECTED_EMPTY_MODEL_STATE + (modelState == null ? null : modelState.toString());
                     view.showErrorMessage(errorMessage);
