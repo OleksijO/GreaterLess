@@ -66,7 +66,7 @@ public class Controller {
     }
 
 
-    private String inputStringValueWithScanner(Scanner scanner) {
+    protected String inputStringValueWithScanner(Scanner scanner) {
         return scanner.next();
     }
 
