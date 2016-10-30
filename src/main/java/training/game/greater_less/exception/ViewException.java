@@ -1,4 +1,4 @@
-package game.greater_less.exception;
+package training.game.greater_less.exception;
 
 /**
  * This exception is used to describe unusual situation in View unit of MVC program architecture

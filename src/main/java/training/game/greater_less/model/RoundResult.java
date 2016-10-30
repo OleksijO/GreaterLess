@@ -1,4 +1,4 @@
-package game.greater_less.model;
+package training.game.greater_less.model;
 
 /**
  * this enum represents all possible results of game round calculation after any value was input by user

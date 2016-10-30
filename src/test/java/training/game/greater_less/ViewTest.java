@@ -1,11 +1,11 @@
-package game.greater_less;
+package training.game.greater_less;
 
-import game.greater_less.model.ModelStateSnapshotDTO;
-import game.greater_less.model.RoundResult;
+import training.game.greater_less.model.ModelStateSnapshotDTO;
+import training.game.greater_less.model.RoundResult;
 import org.junit.Assert;
 import org.junit.Test;
 
-import static game.greater_less.model.ModelStateDTOTest.getValidModelState;
+import static training.game.greater_less.model.ModelStateDTOTest.getValidModelState;
 
 /**
  * This test class is using for test view unit

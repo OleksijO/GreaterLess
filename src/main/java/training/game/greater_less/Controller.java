@@ -1,13 +1,13 @@
-package game.greater_less;
+package training.game.greater_less;
 
-import game.greater_less.exception.ControllerException;
-import game.greater_less.model.Model;
-import game.greater_less.model.ModelStateSnapshotDTO;
-import game.greater_less.model.RoundResult;
+import training.game.greater_less.exception.ControllerException;
+import training.game.greater_less.model.Model;
+import training.game.greater_less.model.ModelStateSnapshotDTO;
+import training.game.greater_less.model.RoundResult;
 
 import java.util.Scanner;
 
-import static game.greater_less.model.ModelStateSnapshotDTO.UNEXPECTED_EMPTY_MODEL_STATE;
+import static training.game.greater_less.model.ModelStateSnapshotDTO.UNEXPECTED_EMPTY_MODEL_STATE;
 
 /**
  * This class represents Controller unit of MVC based architecture of program the game "Greater/Less".

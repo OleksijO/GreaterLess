@@ -1,6 +1,6 @@
-package game.greater_less;
+package training.game.greater_less;
 
-import game.greater_less.model.Model;
+import training.game.greater_less.model.Model;
 
 /**
  * This class is used for initialization and to start the game

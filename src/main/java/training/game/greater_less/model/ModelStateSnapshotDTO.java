@@ -1,8 +1,8 @@
-package game.greater_less.model;
+package training.game.greater_less.model;
 
 import java.util.List;
 
-import static game.greater_less.model.Model.UPPER_BOUND;
+import static training.game.greater_less.model.Model.UPPER_BOUND;
 
 /**
  * This class describes data transfer object, which represents game state after each round (step).

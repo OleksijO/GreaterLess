@@ -1,4 +1,4 @@
-package game.greater_less.model;
+package training.game.greater_less.model;
 
 import org.junit.Test;
 

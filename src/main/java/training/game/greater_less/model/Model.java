@@ -1,10 +1,10 @@
-package game.greater_less.model;
+package training.game.greater_less.model;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import static game.greater_less.model.RoundResult.*;
+import static training.game.greater_less.model.RoundResult.*;
 
 /**
  * This class represents Model unit of MVC based architecture of program the game "Greater/Less".
