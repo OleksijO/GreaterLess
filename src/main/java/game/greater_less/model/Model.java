@@ -72,15 +72,15 @@ public class Model {
     }
 
     public ModelStateDTO getModelState() {
-        ModelStateDTO roundInfo = new ModelStateDTO();
-        roundInfo.setCurrentLowerBound(currentLowerBound);
-        roundInfo.setCurrentUpperBound(currentUpperBound);
-        roundInfo.setRoundResult(roundResult);
-        roundInfo.setUserTries(Collections.unmodifiableList(userInputs));
-        roundInfo.setUserIllegalInputCount(userIllegalInputCount);
-        return roundInfo;
+        ModelStateDTO modelstate = new ModelStateDTO();
+        modelstate.setCurrentLowerBound(currentLowerBound);
+        modelstate.setCurrentUpperBound(currentUpperBound);
+        modelstate.setRoundResult(roundResult);
+        modelstate.setUserTries(Collections.unmodifiableList(userInputs));
+        modelstate.setUserIllegalInputCount(userIllegalInputCount);
+        modelstate.setUserCorrectInputCount(userCorrectInputCount);
+        return modelstate;
     }
-
 
     public void setIncludeIllegalInputsToHistory(boolean includeIllegalInputsToHistory) {
         this.includeIllegalInputsToHistory = includeIllegalInputsToHistory;

@@ -1,9 +1,12 @@
 package game.greater_less;
 
+import game.greater_less.exception.ViewException;
 import game.greater_less.model.RoundResult;
 import game.greater_less.model.ModelStateDTO;
 
 import java.util.List;
+
+import static game.greater_less.model.ModelStateDTO.UNEXPECTED_EMPTY_MODEL_STATE;
 
 /**
  * Created by oleksij.onysymchuk@gmail on 29.10.2016.
@@ -32,11 +35,15 @@ public class View {
     public static final String TRY_LIST_SEPARATOR = ", ";
     public static final String EMPTY_STRING = "";
 
+    public static final String ERROR_HAS_BEEN_OCCURRED = "AN ERROR HAS BEEN OCCURRED : ";
+    public static final String PROGRAM_ABNORMALLY_TERMINATED = "PROGRAM HAS BEEN INTERRUPTED DUE TO OCCURRED ERROR.";
+    public static final String UNEXPECTED_ROUND_RESULT = "View for obtained roundResult is not implemented. RoundResult = ";
+
     private void printMessage(String message) {
         System.out.println(message);
     }
 
-    private void printPrompt(String prompt) {
+    private void printPromt(String prompt) {
         System.out.print(prompt);
     }
 
@@ -52,12 +59,19 @@ public class View {
     }
 
     public void showRoundInfo(ModelStateDTO roundInfo) {
+        checkForValid(roundInfo);
         printEmptyRow();
         printEmptyRow();
         printMessage(PICKED_NUMBER_IS_IN_RANGE_FROM + roundInfo.getCurrentLowerBound()
                 + TO + roundInfo.getCurrentUpperBound());
         printMessage(YOUR_TRIES + convertListToString(roundInfo.getUserTries()));
         printMessage(YOUR_LATEST_RESULT + getStringFromInputCheckResult(roundInfo.getRoundResult()));
+    }
+
+    private void checkForValid(ModelStateDTO state) {
+        if ((state == null) || (!state.isValid())) {
+            throw new ViewException(UNEXPECTED_EMPTY_MODEL_STATE + (state == null ? null : state.toString()));
+        }
     }
 
 
@@ -67,8 +81,8 @@ public class View {
         return list.toString().replaceFirst(TRY_LIST_SEPARATOR, EMPTY_STRING);
     }
 
-    private String getStringFromInputCheckResult(RoundResult lastTryResult) {
-        switch (lastTryResult) {
+    private String getStringFromInputCheckResult(RoundResult roundResult) {
+        switch (roundResult) {
             case GREATER_THAN_PICKED_NUMBER:
                 return RESULT_GREATER_THAN;
             case LESS_THAN_PICKED_NUMBER:
@@ -80,15 +94,16 @@ public class View {
             case ILLEGAL_INPUT:
                 return RESULT_ILLEGAL_INPUT;
             default:
-                throw new UnsupportedOperationException();
+                throw new UnsupportedOperationException(UNEXPECTED_ROUND_RESULT + roundResult);
         }
     }
 
     public void showPromt() {
-        printPrompt(ENTER_YOUR_NUMBER);
+        printPromt(ENTER_YOUR_NUMBER);
     }
 
     public void showStatistics(ModelStateDTO modelState) {
+        checkForValid(modelState);
         int userIllegalTryCount = modelState.getUserIllegalInputCount();
         int userCorrectTryCount = modelState.getUserCorrectInputCount();
 
@@ -101,4 +116,10 @@ public class View {
     }
 
 
+    public void showErrorMessage(String errorMessage) {
+        printEmptyRow();
+        printMessage(PROGRAM_ABNORMALLY_TERMINATED);
+        printEmptyRow();
+        printMessage(ERROR_HAS_BEEN_OCCURRED + errorMessage);
+    }
 }

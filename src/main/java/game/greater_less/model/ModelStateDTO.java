@@ -2,16 +2,46 @@ package game.greater_less.model;
 
 import java.util.List;
 
+import static game.greater_less.model.Model.UPPER_BOUND;
+
 /**
  * Created by oleksij.onysymchuk@gmail on 30.10.2016.
  */
 public class ModelStateDTO {
+    public static final String UNEXPECTED_EMPTY_MODEL_STATE = "Unexpected empty/null/nonValid modelState: ";
+
     private int currentLowerBound;
     private int currentUpperBound;
     private List<String> userTries;
     private RoundResult roundResult;
     private int userIllegalInputCount;
     private int userCorrectInputCount;
+
+    public boolean isValid() {
+        if ((currentLowerBound < Model.LOWER_BOUND) || (currentUpperBound > UPPER_BOUND)) {
+            return false;
+        }
+        if ((userTries==null) || (roundResult==null)){
+            return false;
+        }
+        if (userCorrectInputCount>userTries.size()){
+            return false;
+        }
+
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "ModelStateDTO{" +
+                "currentLowerBound=" + currentLowerBound +
+                ", currentUpperBound=" + currentUpperBound +
+                ", userTries=" + userTries +
+                ", roundResult=" + roundResult +
+                ", userIllegalInputCount=" + userIllegalInputCount +
+                ", userCorrectInputCount=" + userCorrectInputCount +
+                '}';
+    }
 
     public int getCurrentLowerBound() {
         return currentLowerBound;
