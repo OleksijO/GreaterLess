@@ -7,11 +7,9 @@ import game.greater_less.model.Model;
  */
 public class Main {
 
-    public static void main(String... args){
-        Controller controller = new Controller();
-        controller.setModel(new Model());
-        controller.setView(new View());
+    public static void main(String... args) {
 
+        Controller controller = new Controller(new Model(), new View());
         controller.playGame();
     }
 }

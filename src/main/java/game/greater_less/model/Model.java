@@ -17,10 +17,11 @@ public class Model {
     private int currentLowerBound;
     private int currentUpperBound;
     private List<String> userInputs;
-    private RoundResult lastRoundResult;
+    private RoundResult roundResult;
 
     private int userIllegalInputCount;
-    private boolean includeIllegalInputsToHistory=true;
+    private int userCorrectInputCount;
+    private boolean includeIllegalInputsToHistory = true;
 
     public Model() {
         init();
@@ -34,42 +35,47 @@ public class Model {
         userIllegalInputCount = 0;
     }
 
-    public RoundResult performRoundWithUserInput(String userInput) {
-        int userInputNumber;
-
-        // check for nonInteger user input and parse if it is integer.
-        if (includeIllegalInputsToHistory) {
-            userInputs.add(userInput);
-        }
-        try {
-            userInputNumber = Integer.parseInt(userInput);
-        } catch (NumberFormatException e) {
+    public void performRoundWithUserInput(String userInput) {
+        if (checkStringIsInteger(userInput)) {
             userIllegalInputCount++;
-            lastRoundResult = ILLEGAL_INPUT;
-            return ILLEGAL_INPUT;
+            roundResult = ILLEGAL_INPUT;
+            if (includeIllegalInputsToHistory) {
+                userInputs.add(userInput);
+            }
+            return;
         }
 
-
+        int userInputNumber = Integer.parseInt(userInput);
+        userInputs.add(userInput);
+        userCorrectInputCount++;
         if ((userInputNumber > currentUpperBound) || (userInputNumber < currentLowerBound)) {
-            lastRoundResult = OUT_OF_BOUNDS;
-
+            userIllegalInputCount++;
+            roundResult = OUT_OF_BOUNDS;
         } else if (userInputNumber > pickedNumber) {
             currentUpperBound = userInputNumber;
-            lastRoundResult = GREATER_THAN;
+            roundResult = GREATER_THAN_PICKED_NUMBER;
         } else if (userInputNumber < pickedNumber) {
             currentLowerBound = userInputNumber;
-            lastRoundResult = LESS_THAN;
+            roundResult = LESS_THAN_PICKED_NUMBER;
         } else {
-            lastRoundResult = EQUALS_TO;
+            roundResult = EQUALS_TO_PICKED_NUMBER;
         }
-        return lastRoundResult;
+    }
+
+    private boolean checkStringIsInteger(String string) {
+        try {
+            int i = Integer.parseInt(string);
+            return true;
+        } catch (NumberFormatException ignored) {
+            return false;
+        }
     }
 
     public ModelStateDTO getModelState() {
         ModelStateDTO roundInfo = new ModelStateDTO();
         roundInfo.setCurrentLowerBound(currentLowerBound);
         roundInfo.setCurrentUpperBound(currentUpperBound);
-        roundInfo.setLastTryResult(lastRoundResult);
+        roundInfo.setRoundResult(roundResult);
         roundInfo.setUserTries(Collections.unmodifiableList(userInputs));
         roundInfo.setUserIllegalInputCount(userIllegalInputCount);
         return roundInfo;

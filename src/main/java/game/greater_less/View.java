@@ -20,12 +20,12 @@ public class View {
 
     public static final String RESULT_GREATER_THAN = "greater than picked number.";
     public static final String RESULT_LESS_THAN = "less than picked number.";
-    public static final String RESULT_EQUALS_TO = " YOU GUESSED THE PICKED NUMBER !!!";
+    public static final String RESULT_EQUALS_TO = "YOU GUESSED THE PICKED NUMBER !!!";
     public static final String RESULT_OUT_OF_BOUNDS = "out of current bounds";
     public static final String RESULT_ILLEGAL_INPUT = "illegal number format";
 
     public static final String TOTAL_TRIES_COUNT = "Your total tries count: ";
-    public static final String NUMBER_TRIES_COUNT = "Your correct tries count: ";
+    public static final String CORRECT_TRIES_COUNT = "Your correct tries count: ";
     public static final String ILLEGAL_TRIES_COUNT = "Your wrong input tries count: ";
     public static final String GAME_OVER = "GAME OVER.";
 
@@ -41,7 +41,7 @@ public class View {
     }
 
     private void printEmptyRow() {
-        printMessage("");
+        printMessage(EMPTY_STRING);
     }
 
     public void showGreeting(int lowerBound, int upperBound) {
@@ -51,13 +51,13 @@ public class View {
         printEmptyRow();
     }
 
-    public void showNextRoundInfo(ModelStateDTO roundInfo) {
+    public void showRoundInfo(ModelStateDTO roundInfo) {
         printEmptyRow();
         printEmptyRow();
         printMessage(PICKED_NUMBER_IS_IN_RANGE_FROM + roundInfo.getCurrentLowerBound()
                 + TO + roundInfo.getCurrentUpperBound());
         printMessage(YOUR_TRIES + convertListToString(roundInfo.getUserTries()));
-        printMessage(YOUR_LATEST_RESULT + getStringFromInputCheckResult(roundInfo.getLastTryResult()));
+        printMessage(YOUR_LATEST_RESULT + getStringFromInputCheckResult(roundInfo.getRoundResult()));
     }
 
 
@@ -69,11 +69,11 @@ public class View {
 
     private String getStringFromInputCheckResult(RoundResult lastTryResult) {
         switch (lastTryResult) {
-            case GREATER_THAN:
+            case GREATER_THAN_PICKED_NUMBER:
                 return RESULT_GREATER_THAN;
-            case LESS_THAN:
+            case LESS_THAN_PICKED_NUMBER:
                 return RESULT_LESS_THAN;
-            case EQUALS_TO:
+            case EQUALS_TO_PICKED_NUMBER:
                 return RESULT_EQUALS_TO;
             case OUT_OF_BOUNDS:
                 return RESULT_OUT_OF_BOUNDS;
@@ -89,12 +89,12 @@ public class View {
     }
 
     public void showStatistics(ModelStateDTO modelState) {
-        int totalTryCount = modelState.getUserTries().size();
         int userIllegalTryCount = modelState.getUserIllegalInputCount();
+        int userCorrectTryCount = modelState.getUserCorrectInputCount();
 
         printEmptyRow();
-        printMessage(TOTAL_TRIES_COUNT + totalTryCount);
-        printMessage(NUMBER_TRIES_COUNT + (totalTryCount - userIllegalTryCount));
+        printMessage(TOTAL_TRIES_COUNT + (userCorrectTryCount + userIllegalTryCount));
+        printMessage(CORRECT_TRIES_COUNT + userCorrectTryCount);
         printMessage(ILLEGAL_TRIES_COUNT + userIllegalTryCount);
         printEmptyRow();
         printMessage(GAME_OVER);

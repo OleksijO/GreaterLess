@@ -14,6 +14,14 @@ public class Controller {
     private Model model;
     private View view;
 
+    public Controller() {
+    }
+
+    public Controller(Model model, View view) {
+        this.model = model;
+        this.view = view;
+    }
+
     public void playGame() {
         String userInput;
         Scanner scanner = new Scanner(System.in);
@@ -21,14 +29,13 @@ public class Controller {
         view.showGreeting(Model.LOWER_BOUND, Model.UPPER_BOUND);
         view.showPromt();
         while (!(userInput = inputStringValueWithScanner(scanner)).toLowerCase().equals(EXIT)) {
-            RoundResult roundResult = model.performRoundWithUserInput(userInput);
+            model.performRoundWithUserInput(userInput);
             ModelStateDTO modelState = model.getModelState();
-            if (roundResult == RoundResult.EQUALS_TO) {
-                view.showNextRoundInfo(modelState);
+            view.showRoundInfo(modelState);
+            if (modelState.getRoundResult() == RoundResult.EQUALS_TO_PICKED_NUMBER) {
                 view.showStatistics(modelState);
                 return;
             } else {
-                view.showNextRoundInfo(modelState);
                 view.showPromt();
             }
         }

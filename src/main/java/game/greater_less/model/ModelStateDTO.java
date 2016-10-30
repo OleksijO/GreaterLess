@@ -9,8 +9,9 @@ public class ModelStateDTO {
     private int currentLowerBound;
     private int currentUpperBound;
     private List<String> userTries;
-    private RoundResult lastTryResult;
+    private RoundResult roundResult;
     private int userIllegalInputCount;
+    private int userCorrectInputCount;
 
     public int getCurrentLowerBound() {
         return currentLowerBound;
@@ -24,12 +25,16 @@ public class ModelStateDTO {
         return userTries;
     }
 
-    public RoundResult getLastTryResult() {
-        return lastTryResult;
+    public RoundResult getRoundResult() {
+        return roundResult;
     }
 
     public int getUserIllegalInputCount() {
         return userIllegalInputCount;
+    }
+
+    public int getUserCorrectInputCount() {
+        return userCorrectInputCount;
     }
 
     public void setCurrentLowerBound(int currentLowerBound) {
@@ -44,11 +49,15 @@ public class ModelStateDTO {
         this.userTries = userTries;
     }
 
-    public void setLastTryResult(RoundResult lastTryResult) {
-        this.lastTryResult = lastTryResult;
+    public void setRoundResult(RoundResult roundResult) {
+        this.roundResult = roundResult;
     }
 
     public void setUserIllegalInputCount(int userIllegalInputCount) {
         this.userIllegalInputCount = userIllegalInputCount;
+    }
+
+    public void setUserCorrectInputCount(int userCorrectInputCount) {
+        this.userCorrectInputCount = userCorrectInputCount;
     }
 }
