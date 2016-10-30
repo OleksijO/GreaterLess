@@ -7,32 +7,54 @@ import training.game.greater_less.model.ModelStateSnapshotDTO;
  * Created by oleksij.onysymchuk@gmail on 30.10.2016.
  */
 public class StubView extends View {
+    private int greetingCounter=0;
+    private int roundInfoCounter=0;
+    private int showPromtCounter = 0;
+    private int showStatCounter=0;
+    private int errorsCounter=0;
+
     @Override
     public void showGreeting(int lowerBound, int upperBound) {
-        super.showGreeting(lowerBound, upperBound);
+        greetingCounter++;
     }
 
     @Override
     public void showRoundInfo(ModelStateSnapshotDTO roundInfo) {
-        super.showRoundInfo(roundInfo);
+        roundInfoCounter++;
     }
 
     @Override
     public void showPromt() {
-        super.showPromt();
+        showPromtCounter++;
     }
 
     @Override
     public void showStatistics(ModelStateSnapshotDTO modelState) {
-        super.showStatistics(modelState);
+        showStatCounter++;
     }
 
     @Override
     public void showErrorMessage(String errorMessage) {
-        super.showErrorMessage(errorMessage);
+        errorsCounter++;
     }
 
-    public boolean isRightBehaivour(){
-        return true;
+    public int getGreetingCounter() {
+        return greetingCounter;
+    }
+
+    public int getRoundInfoCounter() {
+        return roundInfoCounter;
+    }
+
+    public int getShowPromtCounter() {
+        return showPromtCounter;
+    }
+
+    public int getShowStatCounter() {
+        return showStatCounter;
+    }
+
+    public int getErrorsCounter() {
+        return errorsCounter;
     }
 }

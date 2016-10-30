@@ -1,6 +1,5 @@
 package training.game.greater_less;
 
-import org.junit.Assert;
 import org.junit.Test;
 import training.game.greater_less.model.Model;
 import training.game.greater_less.model.ModelStateSnapshotDTO;
@@ -16,6 +15,7 @@ import static org.junit.Assert.assertEquals;
 
 /**
  * This test class is using for test controller unit
+ *
  * @author oleksij.onysymchuk@gmail
  */
 public class ControllerTest {
@@ -24,24 +24,39 @@ public class ControllerTest {
     @Test
     public void testUserInputExit() {
         StubModel model = new StubModel();
+        model.setIncludeIllegalNonIntegerInputsToHistory(true);
+        StubView view = new StubView();
         final String userInput = "Exit";
-        Controller controller = new Controller(model, new View()) {
+        Controller controller = new Controller(model, view) {
             @Override
             protected String inputStringValueWithScanner(Scanner scanner) {
                 return userInput;
             }
         };
         controller.playGame();
-        Assert.assertEquals("", model.getUserInput());
+        assertEquals("", model.getUserInput());
+        assertEquals(1, view.getGreetingCounter());
+        assertEquals(0, view.getRoundInfoCounter());
+        assertEquals(1, view.getShowPromtCounter());
+        assertEquals(0, view.getShowStatCounter());
+        assertEquals(0, view.getErrorsCounter());
+
+        StubView view1 = new StubView();
         final String userInputNonExit = "No_exit";
-        controller = new Controller(model, new View()) {
+        controller = new Controller(model, view1) {
             @Override
             protected String inputStringValueWithScanner(Scanner scanner) {
                 return userInputNonExit;
             }
         };
         controller.playGame();
-        Assert.assertEquals(userInputNonExit, model.getUserInput());
+        assertEquals(userInputNonExit, model.getUserInput());
+        assertEquals(1, view1.getGreetingCounter());
+        assertEquals(0, view1.getRoundInfoCounter());
+        assertEquals(1, view1.getShowPromtCounter());
+        assertEquals(0, view1.getShowStatCounter());
+        assertEquals(1, view1.getErrorsCounter());
+
     }
 
     @Test
@@ -68,5 +83,10 @@ public class ControllerTest {
         modelState.getUserInputHistory().toArray(testArray);
         assertArrayEquals(input, testArray);
         assertEquals(RoundResult.EQUALS_TO_PICKED_NUMBER, modelState.getRoundResult());
+        assertEquals(1, view.getGreetingCounter());
+        assertEquals(5, view.getRoundInfoCounter());
+        assertEquals(5, view.getShowPromtCounter());
+        assertEquals(1, view.getShowStatCounter());
+        assertEquals(0, view.getErrorsCounter());
     }
 }
