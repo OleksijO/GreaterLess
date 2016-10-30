@@ -1,1 +1,1 @@
-"# training" 
+Java console game 'GREATER/LESS' 
