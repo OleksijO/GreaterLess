@@ -7,16 +7,16 @@ import java.util.List;
 import static game.greater_less.model.RoundResult.*;
 
 /**
- * This class represents Model unit of MVC based architecture program game "Greater/Less".
+ * This class represents Model unit of MVC based architecture of program the game "Greater/Less".
  * It contains game logic and state.
- * Objective of the game is to guess number, picked by computer in random way, in game range
+ * Objective of the game is to guess integer, picked (generated) by computer in random way, in game range
  * by step by step tries.
  * On every try computer tells user if user's input correct number, greater/less than picked number,
  * out of current game range  or equals to picked number. After every try current game range becomes smaller
  * and closer to picked value.
  * After picked number has been guessed use's tries statistics appear and game is over.
  *
- * @author  oleksij.onysymchuk@gmail
+ * @author oleksij.onysymchuk@gmail
  */
 public class Model {
     /* The value of lower bound (included) of initial game range*/
@@ -30,7 +30,7 @@ public class Model {
     private int currentLowerBound;
     /* The value of current (in-game) lower bound (included) of initial game range */
     private int currentUpperBound;
-    /* Container for storing user try guess inputs */
+    /* Container for storing user try guess inputs, i.e. user inputs history */
     private List<String> userInputs;
     /* The result of last round of game on user try input */
     private RoundResult roundResult;
@@ -39,8 +39,8 @@ public class Model {
     private int userIllegalInputCount;
     /* Counter for numeric user inputs. The counter is used for after game statistics  */
     private int userCorrectInputCount;
-     /* this value determines including or not non number inputs to container of user tries and game statistics  */
-    private boolean includeIllegalNonNumberInputsToHistory = true;
+    /* this value determines including or not non number inputs to container of user tries and game statistics  */
+    private boolean includeIllegalNonIntegerInputsToHistory = true;
 
     /**
      * Initiates game's model unit
@@ -64,14 +64,15 @@ public class Model {
      * Calculates result of the game round after user has been input some value ({@code userInput})
      * and updates model state
      *
-     * @param userInput
-     *        The user's input value
+     * @param userInput The user's input value
      */
     public void performRoundWithUserInput(String userInput) {
 
-        if (!checkStringIsInteger(userInput) && includeIllegalNonNumberInputsToHistory) {
-            userIllegalInputCount++;
-            userInputs.add(userInput);
+        if (!checkStringIsInteger(userInput)) {
+            if (includeIllegalNonIntegerInputsToHistory) {
+                userIllegalInputCount++;
+                userInputs.add(userInput);
+            }
             roundResult = ILLEGAL_INPUT;
             return;
         }
@@ -83,10 +84,10 @@ public class Model {
             userIllegalInputCount++;
             roundResult = OUT_OF_BOUNDS;
         } else if (userInputNumber > pickedNumber) {
-            currentUpperBound = userInputNumber-1;
+            currentUpperBound = userInputNumber - 1;            // "-1" to exclude input number from range
             roundResult = GREATER_THAN_PICKED_NUMBER;
         } else if (userInputNumber < pickedNumber) {
-            currentLowerBound = userInputNumber+1;
+            currentLowerBound = userInputNumber + 1;            // "+1" to exclude input number from range
             roundResult = LESS_THAN_PICKED_NUMBER;
         } else {
             roundResult = EQUALS_TO_PICKED_NUMBER;
@@ -95,7 +96,7 @@ public class Model {
 
     private boolean checkStringIsInteger(String string) {
         try {
-            int i = Integer.parseInt(string);
+            int ignored = Integer.parseInt(string);
             return true;
         } catch (NumberFormatException ignored) {
             return false;
@@ -103,28 +104,27 @@ public class Model {
     }
 
     /**
-     * Places and returns game model state into data transfer object to transfer it to another modules
+     * Places and returns game model state snapshot into data transfer object to transfer it to another modules
      *
-     * @return  the state of game model unit.
+     * @return the state of game model unit.
      */
     public ModelStateDTO getModelState() {
-        ModelStateDTO modelstate = new ModelStateDTO();
-        modelstate.setCurrentLowerBound(currentLowerBound);
-        modelstate.setCurrentUpperBound(currentUpperBound);
-        modelstate.setRoundResult(roundResult);
-        modelstate.setUserTries(Collections.unmodifiableList(userInputs));
-        modelstate.setUserIllegalInputCount(userIllegalInputCount);
-        modelstate.setUserCorrectInputCount(userCorrectInputCount);
-        return modelstate;
+        ModelStateDTO modelState = new ModelStateDTO();
+        modelState.setCurrentLowerBound(currentLowerBound);
+        modelState.setCurrentUpperBound(currentUpperBound);
+        modelState.setRoundResult(roundResult);
+        modelState.setUserTries(Collections.unmodifiableList(userInputs));
+        modelState.setUserIllegalInputCount(userIllegalInputCount);
+        modelState.setUserCorrectInputCount(userCorrectInputCount);
+        return modelState;
     }
 
     /**
-     * Sets the model behaivour on non numeric user input values
+     * Sets the model behaivour on non integer user input values
      *
-      * @param includeIllegalNonNumberInputsToHistory
-     *          If true will include non numeric user input values to history and statistics
+     * @param includeIllegalNonIntegerInputsToHistory If true will include non numeric user input values to history and statistics
      */
-    public void setIncludeIllegalNonNumberInputsToHistory(boolean includeIllegalNonNumberInputsToHistory) {
-        this.includeIllegalNonNumberInputsToHistory = includeIllegalNonNumberInputsToHistory;
+    public void setIncludeIllegalNonIntegerInputsToHistory(boolean includeIllegalNonIntegerInputsToHistory) {
+        this.includeIllegalNonIntegerInputsToHistory = includeIllegalNonIntegerInputsToHistory;
     }
 }

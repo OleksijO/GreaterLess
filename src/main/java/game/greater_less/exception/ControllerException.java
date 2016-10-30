@@ -1,7 +1,8 @@
 package game.greater_less.exception;
 
 /**
- * Created by oleksij.onysymchuk@gmail on 30.10.2016.
+ * This exception is used to describe unusual situation in Controller unit of MVC program architecture
+ * @author oleksij.onysymchuk@gmail
  */
 public class ControllerException extends RuntimeException{
     public ControllerException(String message) {

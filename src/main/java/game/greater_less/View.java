@@ -9,7 +9,10 @@ import java.util.List;
 import static game.greater_less.model.ModelStateDTO.UNEXPECTED_EMPTY_MODEL_STATE;
 
 /**
- * Created by oleksij.onysymchuk@gmail on 29.10.2016.
+ * This class represents View unit of MVC based architecture of program the game "Greater/Less".
+ * It contains text constants for output messages and methods to show certain blocks of game information.
+ *
+ * @author oleksij.onysymchuk@gmail
  */
 public class View {
     public static final String GAME_TITLE = "THE GAME GREATER/LESS.";
@@ -20,12 +23,11 @@ public class View {
     public static final String YOUR_LATEST_RESULT = "Latest try result : ";
     public static final String ENTER_YOUR_NUMBER = "Enter your number or type 'exit' to quit : ";
 
-
-    public static final String RESULT_GREATER_THAN = "greater than picked number.";
-    public static final String RESULT_LESS_THAN = "less than picked number.";
-    public static final String RESULT_EQUALS_TO = "YOU GUESSED THE PICKED NUMBER !!!";
-    public static final String RESULT_OUT_OF_BOUNDS = "out of current range";
-    public static final String RESULT_ILLEGAL_INPUT = "illegal number format. You ought to enter number only!";
+    public static final String RESULT_GREATER_THAN = "Last input value is greater than picked number.";
+    public static final String RESULT_LESS_THAN = "Last input value is less than picked number.";
+    public static final String RESULT_EQUALS_TO = "YOU HAVE BEEN GUESSED THE PICKED NUMBER !!!";
+    public static final String RESULT_OUT_OF_BOUNDS = "Last input value is out of current range";
+    public static final String RESULT_ILLEGAL_INPUT = "Last input value is not integer value. You ought to enter integers only!";
 
     public static final String TOTAL_TRIES_COUNT = "Your total tries count: ";
     public static final String CORRECT_TRIES_COUNT = "Your correct tries count: ";
@@ -39,18 +41,13 @@ public class View {
     public static final String PROGRAM_ABNORMALLY_TERMINATED = "PROGRAM HAS BEEN INTERRUPTED DUE TO OCCURRED ERROR.";
     public static final String UNEXPECTED_ROUND_RESULT = "View for obtained roundResult is not implemented. RoundResult = ";
 
-    private void printMessage(String message) {
-        System.out.println(message);
-    }
-
-    private void printPromt(String prompt) {
-        System.out.print(prompt);
-    }
-
-    private void printEmptyRow() {
-        printMessage(EMPTY_STRING);
-    }
-
+    /**
+     * Shows on standart out game title and objective
+     * @param lowerBound
+     *          the value of lower (included) bound of game range
+     * @param upperBound
+     *          the value of upper (included) bound of game range
+     */
     public void showGreeting(int lowerBound, int upperBound) {
         printMessage(GAME_TITLE);
         printEmptyRow();
@@ -58,6 +55,20 @@ public class View {
         printEmptyRow();
     }
 
+    private void printMessage(String message) {
+        System.out.println(message);
+    }
+
+    private void printEmptyRow() {
+        printMessage(EMPTY_STRING);
+    }
+
+    /**
+     * Shows on standart out current game range, history of user's input values and result of calculation game round
+     * after last user's input value performed to model unit
+     *
+     * @param roundInfo model state snapshot
+     */
     public void showRoundInfo(ModelStateDTO roundInfo) {
         checkForValid(roundInfo);
         printEmptyRow();
@@ -98,10 +109,22 @@ public class View {
         }
     }
 
+    /**
+     * Shows on standart out promt to enter next value
+     */
     public void showPromt() {
         printPromt(ENTER_YOUR_NUMBER);
     }
 
+    private void printPromt(String prompt) {
+        System.out.print(prompt);                                        // do not goes to next line
+    }
+
+    /**
+     * Shows on standart out user game statistics - different tries counters
+     *
+     * @param modelState model state snapshot
+     */
     public void showStatistics(ModelStateDTO modelState) {
         checkForValid(modelState);
         int userIllegalTryCount = modelState.getUserIllegalInputCount();
@@ -115,7 +138,11 @@ public class View {
         printMessage(GAME_OVER);
     }
 
-
+    /**
+     * Shows on standart out error massage in case of exception situations
+     *
+     * @param errorMessage error message to display
+     */
     public void showErrorMessage(String errorMessage) {
         printEmptyRow();
         printMessage(PROGRAM_ABNORMALLY_TERMINATED);

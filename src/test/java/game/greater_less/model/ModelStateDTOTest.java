@@ -9,10 +9,14 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 /**
- * Created by oleksij.onysymchuk@gmail on 30.10.2016.
+ * This test class is using for test validation of model state snapshot
+ * @author oleksij.onysymchuk@gmail
  */
 public class ModelStateDTOTest {
-    
+
+    /**
+     * @return returns valid model state snapshot DTO for tests
+     */
     public static ModelStateDTO getValidModelState() {
         ModelStateDTO modelState = new ModelStateDTO();
         modelState.setUserCorrectInputCount(1);
@@ -27,11 +31,15 @@ public class ModelStateDTOTest {
         return modelState;
     }
 
+    /**
+     * tests static method? which generating valid model state snapshot DTO
+     */
     @Test
     public void testValidModelState() {
         ModelStateDTO modelState = getValidModelState();
         assertTrue(modelState.isValid());
     }
+
     @Test
     public void testNonValidModelStateIllegalBounds() {
         ModelStateDTO modelState = getValidModelState();

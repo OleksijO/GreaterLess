@@ -8,14 +8,16 @@ import org.junit.Test;
 import static game.greater_less.model.ModelStateDTOTest.getValidModelState;
 
 /**
- * Created by oleksij.onysymchuk@gmail on 30.10.2016.
+ * This test class is using for test view unit
+ * @author oleksij.onysymchuk@gmail
  */
 public class ViewTest {
 
+    /**
+     * check view unit for unimplemented view round results
+     */
     @Test
     public void testGetStringFromInputCheckResult() {
-
-        //check for unimplemented view round results
         View view = new View();
         ModelStateDTO modelState = getValidModelState();
         Exception exception = null;

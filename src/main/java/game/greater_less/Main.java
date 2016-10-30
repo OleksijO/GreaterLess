@@ -3,12 +3,18 @@ package game.greater_less;
 import game.greater_less.model.Model;
 
 /**
- * Created by oleksij.onysymchuk@gmail on 29.10.2016.
+ * This class is used for initialization and to start the game
+ *
+ * @author oleksij.onysymchuk@gmail
  */
 public class Main {
 
-    public static void main(String... args) {
 
+    /**
+     * Initializes all units of MVC architecture and runs the game
+     * @param args does not used
+     */
+    public static void main(String... args) {
         Controller controller = new Controller(new Model(), new View());
         controller.playGame();
     }

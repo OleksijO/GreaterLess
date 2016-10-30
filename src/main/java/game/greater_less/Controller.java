@@ -10,21 +10,33 @@ import java.util.Scanner;
 import static game.greater_less.model.ModelStateDTO.UNEXPECTED_EMPTY_MODEL_STATE;
 
 /**
- * Created by oleksij.onysymchuk@gmail on 29.10.2016.
+ * This class represents Controller unit of MVC based architecture of program the game "Greater/Less".
+ * It contains user input tool and main game cycle.
+ *
+ * @author oleksij.onysymchuk@gmail
  */
 public class Controller {
     public static final String EXIT = "exit";
     private Model model;
     private View view;
 
+    /**
+     * Initiates game's controller unit. Properties model and view must be set addionally !
+     */
     public Controller() {
     }
 
+    /**
+     * Initiates game's controller unit.
+     */
     public Controller(Model model, View view) {
         this.model = model;
         this.view = view;
     }
 
+    /**
+     *  runs main game cycle
+     */
     public void playGame() {
         try {
             String userInput;
@@ -55,15 +67,24 @@ public class Controller {
 
 
     private String inputStringValueWithScanner(Scanner scanner) {
-
         return scanner.next();
     }
 
 
+    /**
+     * sets  the value of model property.
+     * This propertie refers to model unit of the game proram
+     * @param model
+     */
     public void setModel(Model model) {
         this.model = model;
     }
 
+    /**
+     * sets  the value of view property.
+     * This propertie refers to view unit of the game proram
+     * @param view
+     */
     public void setView(View view) {
         this.view = view;
     }
