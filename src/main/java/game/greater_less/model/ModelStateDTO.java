@@ -18,13 +18,12 @@ public class ModelStateDTO {
     private int userCorrectInputCount;
 
     public boolean isValid() {
-        if ((currentLowerBound < Model.LOWER_BOUND) || (currentUpperBound > UPPER_BOUND)) {
-            return false;
-        }
-        if ((userTries==null) || (roundResult==null)){
-            return false;
-        }
-        if (userCorrectInputCount>userTries.size()){
+        if ((currentLowerBound < Model.LOWER_BOUND) ||
+                (currentUpperBound > UPPER_BOUND) ||
+                (currentLowerBound > currentUpperBound) ||
+                (userTries == null) ||
+                (roundResult == null) ||
+                (userCorrectInputCount > userTries.size())) {
             return false;
         }
 

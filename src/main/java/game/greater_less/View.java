@@ -13,9 +13,9 @@ import static game.greater_less.model.ModelStateDTO.UNEXPECTED_EMPTY_MODEL_STATE
  */
 public class View {
     public static final String GAME_TITLE = "THE GAME GREATER/LESS.";
-    public static final String OBJECTIVE_IS_GUESS_NUMBER_FROM = "Objective is to guess number from ";
+    public static final String OBJECTIVE_IS_GUESS_NUMBER_FROM = "Objective is to guess number including bounds from ";
     public static final String TO = " to ";
-    public static final String PICKED_NUMBER_IS_IN_RANGE_FROM = "The picked number is in range from ";
+    public static final String PICKED_NUMBER_IS_IN_RANGE_FROM = "The picked number is in range including bounds from ";
     public static final String YOUR_TRIES = "Your tries were: ";
     public static final String YOUR_LATEST_RESULT = "Latest try result : ";
     public static final String ENTER_YOUR_NUMBER = "Enter your number or type 'exit' to quit : ";
@@ -24,8 +24,8 @@ public class View {
     public static final String RESULT_GREATER_THAN = "greater than picked number.";
     public static final String RESULT_LESS_THAN = "less than picked number.";
     public static final String RESULT_EQUALS_TO = "YOU GUESSED THE PICKED NUMBER !!!";
-    public static final String RESULT_OUT_OF_BOUNDS = "out of current bounds";
-    public static final String RESULT_ILLEGAL_INPUT = "illegal number format";
+    public static final String RESULT_OUT_OF_BOUNDS = "out of current range";
+    public static final String RESULT_ILLEGAL_INPUT = "illegal number format. You ought to enter number only!";
 
     public static final String TOTAL_TRIES_COUNT = "Your total tries count: ";
     public static final String CORRECT_TRIES_COUNT = "Your correct tries count: ";
