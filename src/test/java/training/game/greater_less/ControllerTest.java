@@ -21,7 +21,7 @@ public class ControllerTest {
     public void testUserInputs() throws NoSuchFieldException, IllegalAccessException {
         Model model = new Model();
         View view = new View();
-        String input[] = {"ss", "40", "40", "60", "150", "50"};
+        String input[] = {"-50","140","ss", "40", "40", "60", "150", "50"};
         Integer[] inputValues = {40, 60, 50};
         // replacing user input to strings from array
         Controller controller = new Controller(model, view) {
@@ -29,7 +29,7 @@ public class ControllerTest {
 
             @Override
             protected void initModel(int lowerBound, int upperBound) {
-                model.setGameRange(-50, +140);
+                model.setGameRange(Integer.parseInt(input[0]), Integer.parseInt(input[1]));
                 try {
                     Field field = Model.class.getDeclaredField("pickedValue");
                     field.setAccessible(true);

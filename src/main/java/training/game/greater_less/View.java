@@ -17,6 +17,11 @@ public class View {
                     "out of current game range  or equals to picked number.\n" +
                     "After every try current game range becomes smaller and closer to picked value.\n" +
                     "After picked number has been guessed use's tries statistics appears and game is over.";
+    public static final String ENTER_BOUNDS_OF_GAME_RANGE =
+            "Enter bounds of game range. Upper bound must be greater than lower one. Difference must be more than 2.";
+    public static final String ENTER_LOWER_BOUND_OF_GAME_RANGE = "Enter integer number of LOWER bound of game range: ";
+    public static final String ENTER_UPPER_BOUND_OF_GAME_RANGE = "Enter integer number of UPPER bound of game range: ";
+    public static final String ENTERED_BOUNDS_ARE_INVALID = "Entered bounds are invalid, please, reenter.";
     public static final String TO = " to ";
     public static final String ENTER_INT_NUMBER_IN_RANGE_FROM = "Enter INT number in range from ";
     public static final String RESULT_GREATER_THAN = "Your value is GREATER than picked secret number.";
