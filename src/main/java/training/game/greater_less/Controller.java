@@ -1,13 +1,9 @@
 package training.game.greater_less;
 
-import training.game.greater_less.exception.ControllerException;
-import training.game.greater_less.model.Model;
-import training.game.greater_less.model.ModelStateSnapshotDTO;
-import training.game.greater_less.model.RoundResult;
-
 import java.util.Scanner;
 
-import static training.game.greater_less.model.ModelStateSnapshotDTO.UNEXPECTED_EMPTY_MODEL_STATE;
+import static training.game.greater_less.GlobalConstants.LOWER_BOUND;
+import static training.game.greater_less.GlobalConstants.UPPER_BOUND;
 
 /**
  * This class represents Controller unit of MVC based architecture of program the game "Greater/Less".
@@ -16,18 +12,18 @@ import static training.game.greater_less.model.ModelStateSnapshotDTO.UNEXPECTED_
  * @author oleksij.onysymchuk@gmail
  */
 public class Controller {
-    public static final String EXIT = "exit";
+
+    /**
+     * Reference to model unit of MVC based architecture of program
+     */
     private Model model;
+    /**
+     * Reference to view unit of MVC based architecture of program
+     */
     private View view;
 
     /**
-     * Initiates game's controller unit. Properties model and view must be set addionally !
-     */
-    public Controller() {
-    }
-
-    /**
-     * Initiates game's controller unit.
+     * Initiates game's controller unit and fields {@link #model}, {@link #view}
      */
     public Controller(Model model, View view) {
         this.model = model;
@@ -35,56 +31,80 @@ public class Controller {
     }
 
     /**
-     *  runs main game cycle
+     * runs main game cycle
      */
     public void playGame() {
-        try {
-            String userInput;
-            Scanner scanner = new Scanner(System.in);
 
-            view.showGreeting(Model.LOWER_BOUND, Model.UPPER_BOUND);
-            view.showPromt();
-            while (!(userInput = inputStringValueWithScanner(scanner)).toLowerCase().equals(EXIT)) {
-                model.performRoundWithUserInput(userInput);
-                ModelStateSnapshotDTO modelState = model.getModelState();
-                if ((modelState == null) || (!modelState.isValid())) {
-                    String errorMessage = UNEXPECTED_EMPTY_MODEL_STATE + (modelState == null ? null : modelState.toString());
-                    view.showErrorMessage(errorMessage);
-                    throw new ControllerException(errorMessage);
-                }
-                view.showRoundInfo(modelState);
-                if (modelState.getRoundResult() == RoundResult.EQUALS_TO_PICKED_NUMBER) {
-                    view.showStatistics(modelState);
-                    return;
-                } else {
-                    view.showPromt();
-                }
+        String userInputValue;
+        int userValue;
+        Scanner scanner = new Scanner(System.in);
+        initModel(LOWER_BOUND,UPPER_BOUND);
+        view.showGreeting();
+        userValue = model.getLowerBound();
+
+        do {
+            view.showPromt(model.getLowerBound(), model.getUpperBound());
+            userInputValue = inputStringValueWithScanner(scanner);
+            if (!checkStringIsInteger(userInputValue)) {
+                view.showMessage(View.ILLEGAL_INPUT);
+                continue;
             }
-        } catch (Exception e){
-            view.showErrorMessage(e.getClass().getSimpleName()+ "\n" +e.getMessage());
-        }
+            userValue = Integer.parseInt(userInputValue);
+            if (!model.isUserInputValueIsInRange(userValue)) {
+                view.showMessage(View.RESULT_OUT_OF_BOUNDS);
+                continue;
+            }
+            int result = model.checkUserValue(userValue);
+            if (result == Model.GREATER) {
+                view.showMessage(View.RESULT_GREATER_THAN);
+            } else if (result == Model.EQUALS) {
+                view.showYouWinAndStatisitics(model.getUserInputHistory());
+            } else {
+                view.showMessage(View.RESULT_LESS_THAN);
+            }
+
+        } while (userValue != model.getPickedValue());
+
     }
 
+    /**
+     * Sets up initial model values
+     *
+     * @param lowerBound the value of lower bound of initial game range
+     * @param upperBound the value of upper bound of initial game range
+     */
+    protected void initModel(int lowerBound, int upperBound){
+        model.setGameRange(lowerBound, upperBound);
+        model.pickNumber();
+    }
 
     protected String inputStringValueWithScanner(Scanner scanner) {
         return scanner.next();
     }
 
-
     /**
-     * sets  the value of model property.
-     * This propertie refers to model unit of the game proram
-     * @param model
+     * Checkes if the parameter is correct integer value
+     *
+     * @param string string value to be checked
+     * @return returns true if the parameter is correct integer value, false in other cases
      */
+    protected boolean checkStringIsInteger(String string) {
+        try {
+            int ignored = Integer.parseInt(string);
+            return true;
+        } catch (NumberFormatException ignored) {
+            return false;
+        }
+    }
+
+    private int convertStringToInt(String string) {
+        return Integer.parseInt(string);
+    }
+
     public void setModel(Model model) {
         this.model = model;
     }
 
-    /**
-     * sets  the value of view property.
-     * This propertie refers to view unit of the game proram
-     * @param view
-     */
     public void setView(View view) {
         this.view = view;
     }
