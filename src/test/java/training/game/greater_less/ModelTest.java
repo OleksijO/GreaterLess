@@ -108,7 +108,7 @@ public class ModelTest {
     }
 
     @Test
-    public void testPickValue() {
+    public void testPickValueByLimits() {
         int lowerBound = 0;
         int upperBound = 101;
         Model model = new Model() {
@@ -141,5 +141,20 @@ public class ModelTest {
         model.setGameRange(0, 101);
         model.pickNumber();
         assertEquals(51, model.getPickedValue());
+    }
+
+    @Test
+    public void testPickValueByBruteForce() {
+        int lowerBound = -100;
+        int upperBound = 100;
+        Model model = new Model();
+        model.setGameRange(lowerBound, upperBound);
+
+        long totalPickNumberCount=(long)(Math.abs(upperBound-lowerBound)*1000);
+        for (int i=0;i<totalPickNumberCount;i++){
+            model.pickNumber();
+            int pickedNumber=model.getPickedValue();
+            assertTrue(lowerBound<pickedNumber && pickedNumber<upperBound );
+        }
     }
 }
