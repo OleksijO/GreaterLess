@@ -20,7 +20,10 @@ public class Controller {
     private View view;
 
     /**
-     * Initiates game's controller unit and fields {@link #model}, {@link #view}
+     * Initiates game's controller unit and set up references to model and view units
+     *
+     * @param model reference to model unit of application
+     * @param view reference to view unit of application
      */
     public Controller(Model model, View view) {
         this.model = model;
