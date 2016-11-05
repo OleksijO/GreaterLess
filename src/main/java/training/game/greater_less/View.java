@@ -8,6 +8,7 @@ import static java.lang.String.*;
  * This class represents View unit of MVC based architecture of program the game "Greater/Less".
  * It contains text constants for output messages and methods to show certain blocks of game information.
  *
+ * @version 1.0 05 NOV 2016
  * @author oleksij.onysymchuk@gmail
  */
 public class View {

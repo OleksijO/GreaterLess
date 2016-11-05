@@ -9,6 +9,7 @@ import static training.game.greater_less.GlobalConstants.UPPER_BOUND;
  * This class represents Controller unit of MVC based architecture of program the game "Greater/Less".
  * It contains user input tool and main game cycle.
  *
+ * @version 1.0 05 NOV 2016
  * @author oleksij.onysymchuk@gmail
  */
 public class Controller {

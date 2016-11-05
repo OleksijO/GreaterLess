@@ -13,6 +13,7 @@ import java.util.List;
  * and closer to picked value.
  * After picked number has been guessed use's tries statistics appears and game is over.
  *
+ * @version 1.0 05 NOV 2016
  * @author oleksij.onysymchuk@gmail
  */
 public class Model {
@@ -112,6 +113,9 @@ public class Model {
     }
 
     /**
+     * Checks parameters' values for correctness and sets game range if they are correct
+     * or throws exception in other way
+     *
      * @param lowerBound the value of lower bound of initial game range
      * @param upperBound the value of upper bound of initial game range
      * @throws RuntimeException in case if the lower bound is not less than upper one min for 2.

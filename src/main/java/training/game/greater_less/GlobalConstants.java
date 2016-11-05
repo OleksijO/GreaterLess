@@ -1,7 +1,10 @@
 package training.game.greater_less;
 
 /**
- * Created by oleksij.onysymchuk@gmail on 01.11.2016.
+ * The class contains initial game parameters.
+ *
+ * @version 1.0 05 NOV 2016
+ * @author oleksij.onysymchuk@gmail
  */
 public interface GlobalConstants {
     /* The value of lower bound (not included) of initial game range*/
