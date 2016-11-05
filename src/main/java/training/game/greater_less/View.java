@@ -45,6 +45,9 @@ public class View {
 
     /**
      * Shows on standart out promt to enter next value
+     *
+     * @param lowerBound the value of lower bound of game range
+     * @param upperBound the value of upper bound of game range
      */
     public void showPromt(int lowerBound, int upperBound) {
         printMessage(format(ENTER_INT_NUMBER_IN_RANGE, lowerBound, upperBound));
@@ -53,7 +56,7 @@ public class View {
     /**
      * Shows specified message on standart out
      *
-     * @param message
+     * @param message the text to be shown
      */
     public void showMessage(String message) {
         printMessage(message);

@@ -10,7 +10,7 @@ public class Main {
 
     /**
      * Initializes all units of MVC architecture and runs the game
-     * @param args does not used
+     * @param args do not used
      */
     public static void main(String... args) {
         Controller controller = new Controller(new Model(), new View());

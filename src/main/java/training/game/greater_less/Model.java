@@ -71,6 +71,7 @@ public class Model {
      *
      * @param userInputValue next user attempt to guess value
      * @throws RuntimeException in case of bounds are not set up yet.
+     * @return returns true if the parameter userInputValue is in game range or false in other cases
      */
     public boolean isUserInputValueIsInRange(int userInputValue) {
         if (!isCorrectBounds()) {
