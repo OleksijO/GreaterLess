@@ -22,7 +22,7 @@ public class View {
     public static final String ENTER_INT_NUMBER_IN_RANGE = "Enter INT number in range from %d to %d";
     public static final String RESULT_GREATER_THAN = "Your value is GREATER than picked secret number.";
     public static final String RESULT_LESS_THAN = "Your value is LESS than picked secret number.";
-    public static final String RESULT_EQUALS_TO = "CONGRATULATIONS!!! YOU HAVE BEEN GUESSED THE SECRET NUMBER WAS %d";
+    public static final String RESULT_EQUALS_TO = "CONGRATULATIONS!!! YOU HAVE BEEN GUESSED THE SECRET NUMBER!!! IT WAS %d";
     public static final String RESULT_OUT_OF_BOUNDS = "Your value is OUT OF CURRENT GAME RANGE. Pay more attention! Bounds are also not included.";
     public static final String ILLEGAL_INPUT = "You input value, which is NOT INTEGER value. You ought to enter integers only!";
     public static final String TOTAL_TRIES_COUNT = "Your total tries count: %d";
