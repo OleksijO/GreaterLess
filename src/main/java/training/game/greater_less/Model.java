@@ -13,6 +13,7 @@ import java.util.List;
  * and closer to picked value.
  * After picked number has been guessed use's tries statistics appears and game is over.
  *
+ * @version 2.0 05 NOV 2016
  * @author oleksij.onysymchuk@gmail
  */
 public class Model {
@@ -71,7 +72,7 @@ public class Model {
      *
      * @param userInputValue next user attempt to guess value
      * @throws RuntimeException in case of bounds are not set up yet.
-     * @return returns true if the parameter userInputValue is in game range or false in other cases
+     * @return true if the parameter userInputValue is in game range or false in other cases
      */
     public boolean isUserInputValueIsInRange(int userInputValue) {
         if (!isCorrectBounds()) {
@@ -81,11 +82,11 @@ public class Model {
     }
 
     /**
-     * Compares user input value to picked value and returns result similar to method compareTo().
+     * Compares user input value to picked value and  result similar to method compareTo().
      * NOTE. You must check if user input value is in current game range first or RuntimeExceprion will be thrown!
      *
      * @param userValue next user attempt to guess value
-     * @return returns:
+     * @return
      * {@code          -1 if the parameter is less than picked number;      }
      * {@code           0 if the parameter is equals to picked number;      }
      * {@code          +1 if the parameter is greater than picked number;   }
@@ -112,6 +113,9 @@ public class Model {
     }
 
     /**
+     * Checks parameters' values for correctness and sets game range if they are correct
+     * or throws exception in other way
+     *
      * @param lowerBound the value of lower bound of initial game range
      * @param upperBound the value of upper bound of initial game range
      * @throws RuntimeException in case if the lower bound is not less than upper one min for 2.

@@ -6,6 +6,7 @@ import java.util.Scanner;
  * This class represents Controller unit of MVC based architecture of program the game "Greater/Less".
  * It contains user input tool and main game cycle.
  *
+ * @version 2.0 05 NOV 2016
  * @author oleksij.onysymchuk@gmail
  */
 public class Controller {
@@ -78,10 +79,19 @@ public class Controller {
 
     }
 
-    private int inputIntValue(Scanner scanner, String promtMessage) {
+
+    /**
+     * asks user to enter int value, checks is it int,  in case of int, in other case -
+     * shows error and asks again to enter int over and over)
+     *
+     * @param scanner the reference to the input source
+     * @param promptMessage the text of prompt message
+     * @return only int value of user's input
+     */
+    private int inputIntValue(Scanner scanner, String promptMessage) {
         String userInputValue;
         while (true) {
-            view.showMessage(promtMessage);
+            view.showMessage(promptMessage);
             userInputValue = inputStringValueWithScanner(scanner);
             if (!checkStringIsInteger(userInputValue)) {
                 view.showMessage(View.ILLEGAL_INPUT);
@@ -111,7 +121,7 @@ public class Controller {
      * Checkes if the parameter is correct integer value
      *
      * @param string string value to be checked
-     * @return returns true if the parameter is correct integer value, false in other cases
+     * @return true if the parameter is correct integer value, false in other cases
      */
     protected boolean checkStringIsInteger(String string) {
         try {
