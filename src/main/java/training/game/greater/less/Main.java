@@ -1,4 +1,4 @@
-package training.game.greater_less;
+package training.game.greater.less;
 
 /**
  * This class is used for initialization and to start the game

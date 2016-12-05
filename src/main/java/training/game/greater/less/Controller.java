@@ -1,4 +1,4 @@
-package training.game.greater_less;
+package training.game.greater.less;
 
 import java.util.Scanner;
 
