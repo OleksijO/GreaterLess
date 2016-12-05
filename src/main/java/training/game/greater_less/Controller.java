@@ -31,6 +31,9 @@ public class Controller {
         this.view = view;
     }
 
+    Controller() {
+    }
+
     /**
      * runs main game cycle
      */
