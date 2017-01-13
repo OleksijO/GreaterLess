@@ -5,9 +5,9 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * Created by oleksij.onysymchuk@gmail on 13.01.2017.
  */
-public class ParameterExtractor {
+public interface ParameterExtractor {
 
-    public int getIntFromRequest(HttpServletRequest request, String param, String errorMessage) {
+    default int getIntFromRequest(HttpServletRequest request, String param, String errorMessage) {
         try {
             return Integer.parseInt(request.getParameter(param));
         } catch (NumberFormatException e) {

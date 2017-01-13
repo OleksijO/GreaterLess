@@ -10,6 +10,7 @@ import training.game.greater.less.controller.config.Paths;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 
 import static training.game.greater.less.controller.config.Parameters.SETUP_RANGE_LOWER_BOUND;
@@ -17,19 +18,18 @@ import static training.game.greater.less.controller.config.Parameters.SETUP_RANG
 /**
  * Created by oleksij.onysymchuk@gmail on 11.01.2017.
  */
-public class PostSetUpCommand implements Command {
+public class PostSetUpCommand implements Command, ParameterExtractor {
 
-    private final ParameterExtractor parameterExtractor = new ParameterExtractor();
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
         try {
-            int lowerBound = parameterExtractor.
+            int lowerBound =
                     getIntFromRequest(request, SETUP_RANGE_LOWER_BOUND, "Lower bound should be INT");
-            int upperBound = parameterExtractor.
+            int upperBound =
                     getIntFromRequest(request, Parameters.SETUP_RANGE_UPPER_BOUND, "Lower bound should be INT");
             Model model = initModel(lowerBound, upperBound);
-            request.getSession().setAttribute(Attributes.MODEL, model);
-            request.getSession().setAttribute(Attributes.HISTORY, new ArrayList<String>());
+            storeObjectInSession(model, Attributes.MODEL, request.getSession());
+            storeObjectInSession(new ArrayList<String>(), Attributes.HISTORY, request.getSession());
             response.sendRedirect(Paths.GAME_PATH);
             return "REDIRECTED";
         } catch (Exception e) {
@@ -38,6 +38,10 @@ public class PostSetUpCommand implements Command {
             return Pages.SETUP_PAGE;
         }
 
+    }
+
+    private void storeObjectInSession(Object object, String attributeName, HttpSession session) {
+        session.setAttribute(attributeName, object);
     }
 
     private Model initModel(int lowerBound, int upperBound) {
