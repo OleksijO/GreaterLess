@@ -8,12 +8,15 @@ import training.game.greater.less.controller.config.Pages;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.List;
 
 import static java.lang.String.format;
-import static training.game.greater.less.controller.config.ViewMessages.*;
 import static training.game.greater.less.controller.config.Attributes.*;
 import static training.game.greater.less.controller.config.Parameters.USER_INPUT_NUMBER;
+import static training.game.greater.less.controller.config.Paths.REDIRECTED;
+import static training.game.greater.less.controller.config.Paths.SETUP_PATH;
+import static training.game.greater.less.controller.config.ViewMessages.*;
 
 /**
  * Created by oleksij.onysymchuk@gmail on 11.01.2017.
@@ -24,13 +27,13 @@ public class PostGameCommand implements Command, ParameterExtractor, GameCommand
     public static final String INPUT_VALUE = "Input value: ";
 
     @Override
-    public String execute(HttpServletRequest request, HttpServletResponse response) {
+    public String execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
         Model model = restoreModel(request);
         List<String> history = restoreHistory(request);
         if ((model == null) || (history == null)) {
-            putErrorMessageToView(request, ILLEGAL_GAME_STATE);
-            return Pages.GAME_PAGE;
+            response.sendRedirect(SETUP_PATH);
+            return REDIRECTED;
         }
 
         int userValue;
@@ -54,6 +57,10 @@ public class PostGameCommand implements Command, ParameterExtractor, GameCommand
         putGameRangeToRequest(request);
 
         return Pages.GAME_PAGE;
+    }
+
+    private void putInternalErrorMessageToView(HttpServletRequest request, String message) {
+        request.setAttribute(ERROR_MESSAGE, message);
     }
 
     private void putUserInpuValueToView(HttpServletRequest request, int userValue) {
