@@ -5,7 +5,17 @@
          version="3.1">
 
     <display-name>Greater-Less</display-name>
-    <welcome-file-list>
-        <welcome-file>/index.html</welcome-file>
-    </welcome-file-list>
+
+    <servlet>
+        <servlet-name>main</servlet-name>
+        <servlet-class>training.game.greater.less.controller.MainController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>main</servlet-name>
+        <url-pattern>/</url-pattern>
+        <url-pattern>/game</url-pattern>
+        <url-pattern>/setup</url-pattern>
+    </servlet-mapping>
+
+
 </web-app>

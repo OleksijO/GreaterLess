@@ -6,4 +6,5 @@ package training.game.greater.less.controller.config;
 public class Pages {
     public static final String GAME_PAGE = "/WEB-INF/view/jsp/game.jsp";
     public static final String SETUP_PAGE = "/WEB-INF/view/jsp/setup.jsp";
+    public static final String HOME_PAGE = "/WEB-INF/view/jsp/home.jsp";
 }

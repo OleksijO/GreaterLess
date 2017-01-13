@@ -1,6 +1,7 @@
 package training.game.greater.less.controller;
 
 import training.game.greater.less.controller.command.get.GetGameCommand;
+import training.game.greater.less.controller.command.get.GetHomeCommand;
 import training.game.greater.less.controller.command.get.GetSetUpCommand;
 import training.game.greater.less.controller.command.post.PostGameCommand;
 import training.game.greater.less.controller.command.post.PostSetUpCommand;
@@ -21,6 +22,7 @@ public class MainController extends HttpServlet {
     private final Map<String, Command> getCommands = new HashMap<String, Command>() {{
         put("/setup", new GetSetUpCommand());
         put("/game", new GetGameCommand());
+        put("/", new GetHomeCommand());
     }};
     private final Map<String, Command> postCommands = new HashMap<String, Command>() {{
         put("/setup", new PostSetUpCommand());
@@ -28,11 +30,11 @@ public class MainController extends HttpServlet {
     }};
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        processCommand(getCommands.get(request.getRequestURI()), request, response);
+        processCommand(postCommands.get(request.getRequestURI()), request, response);
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        processCommand(postCommands.get(request.getRequestURI()), request, response);
+        processCommand(getCommands.get(request.getRequestURI()), request, response);
     }
 
     private void processCommand(Command command, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -42,6 +44,9 @@ public class MainController extends HttpServlet {
             response.sendRedirect(Paths.HOME_PATH);
             return;
         }
-        request.getRequestDispatcher(command.execute(request,response)).forward(request,response);
+        String view = command.execute(request, response);
+        if (!view.equals("REDIRECTED")) {
+            request.getRequestDispatcher(view).forward(request, response);
+        }
     }
 }
