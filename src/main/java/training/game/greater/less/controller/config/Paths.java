@@ -7,4 +7,6 @@ public class Paths {
     public static final String GAME_PATH = "/game";
     public static final String SETUP_PATH = "/setup";
     public static final String HOME_PATH = "/";
+
+    public static final String REDIRECTED = "REDIRECTED";
 }

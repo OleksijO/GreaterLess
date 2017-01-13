@@ -14,6 +14,7 @@ import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 
 import static training.game.greater.less.controller.config.Parameters.SETUP_RANGE_LOWER_BOUND;
+import static training.game.greater.less.controller.config.Paths.REDIRECTED;
 
 /**
  * Created by oleksij.onysymchuk@gmail on 11.01.2017.
@@ -31,7 +32,7 @@ public class PostSetUpCommand implements Command, ParameterExtractor {
             storeObjectInSession(model, Attributes.MODEL, request.getSession());
             storeObjectInSession(new ArrayList<String>(), Attributes.HISTORY, request.getSession());
             response.sendRedirect(Paths.GAME_PATH);
-            return "REDIRECTED";
+            return REDIRECTED;
         } catch (Exception e) {
             request.setAttribute(Attributes.ERROR_MESSAGE, e.getMessage());
             e.printStackTrace();

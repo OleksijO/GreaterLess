@@ -1,6 +1,6 @@
 package training.game.greater.less.controller.command.get;
 
-import training.game.greater.less.View;
+import training.game.greater.less.controller.config.ViewMessages;
 import training.game.greater.less.controller.Command;
 import training.game.greater.less.controller.command.GameCommand;
 import training.game.greater.less.controller.config.Pages;
@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.util.List;
 
 import static training.game.greater.less.controller.config.Attributes.*;
+import static training.game.greater.less.controller.config.Paths.REDIRECTED;
 
 /**
  * Created by oleksij.onysymchuk@gmail on 11.01.2017.
@@ -27,7 +28,7 @@ public class GetGameCommand implements Command, GameCommand {
             return Pages.GAME_PAGE;
         } else {
             response.sendRedirect(Paths.SETUP_PATH);
-            return "REDIRECTED";
+            return REDIRECTED;
         }
     }
 
@@ -40,8 +41,8 @@ public class GetGameCommand implements Command, GameCommand {
 
     private void putGreetingMessagesToRequest(HttpServletRequest request) {
         List<String> history = restoreHistory(request);
-        history.add(View.GAME_TITLE);
-        history.add(View.OBJECTIVE_IS_GUESS_NUMBER_IN_RANGE);
+        history.add(ViewMessages.GAME_TITLE);
+        history.add(ViewMessages.OBJECTIVE_IS_GUESS_NUMBER_IN_RANGE);
         request.setAttribute(USUAL_MESSAGE, "The Game Is On!");
     }
 }

@@ -5,8 +5,6 @@ import training.game.greater.less.controller.command.get.GetHomeCommand;
 import training.game.greater.less.controller.command.get.GetSetUpCommand;
 import training.game.greater.less.controller.command.post.PostGameCommand;
 import training.game.greater.less.controller.command.post.PostSetUpCommand;
-import training.game.greater.less.controller.config.Attributes;
-import training.game.greater.less.controller.config.Paths;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -17,8 +15,13 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+import static training.game.greater.less.controller.config.Attributes.ERROR_MESSAGE;
+import static training.game.greater.less.controller.config.Paths.HOME_PATH;
+import static training.game.greater.less.controller.config.Paths.REDIRECTED;
+
 @WebServlet(name = "MainController")
 public class MainController extends HttpServlet {
+    private static final String INTERNAL_ERROR = "Internal error.";
     private final Map<String, Command> getCommands = new HashMap<String, Command>() {{
         put("/setup", new GetSetUpCommand());
         put("/game", new GetGameCommand());
@@ -40,12 +43,12 @@ public class MainController extends HttpServlet {
     private void processCommand(Command command, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         if (command == null) {
-            request.setAttribute(Attributes.ERROR_MESSAGE, "Internal error.");
-            response.sendRedirect(Paths.HOME_PATH);
+            request.setAttribute(ERROR_MESSAGE, INTERNAL_ERROR);
+            response.sendRedirect(HOME_PATH);
             return;
         }
         String view = command.execute(request, response);
-        if (!view.equals("REDIRECTED")) {
+        if (!view.equals(REDIRECTED)) {
             request.getRequestDispatcher(view).forward(request, response);
         }
     }

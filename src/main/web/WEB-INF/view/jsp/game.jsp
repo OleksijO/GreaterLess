@@ -19,7 +19,7 @@
 <p style="color: red">${requestScope[Attributes.ERROR_MESSAGE]}</p>
 <p style="color: green">${requestScope[Attributes.USUAL_MESSAGE]} </p>
 <c:choose>
-    <c:when test="${empty requestScope[Attributes.GAME_OVER]}">
+    <c:when test="${empty requestScope[Attributes.GAME_IS_OVER]}">
         <form action="${Paths.GAME_PATH}" method="post">
             <label for="input_number">
                 Enter your number in between ${requestScope[Attributes.LOWER_BOUND]}
